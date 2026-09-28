@@ -80,3 +80,36 @@
 - Adapter la taille du grapique de la page d'accueil sur mobile / Disposition des indicateurs
 
 - Augmenter la taille de police pour le nom du pays dans le titre de la page d'un pays
+
+# Etape 2 - Concevoir une nouvelle architecture adaptée
+
+1. ## Structure du projet et schéma (voir Diagramme.jpg)
+
+- src/app/
+  - components/
+    - header/
+    - footer/
+    - pie-chart/
+    - chart-indicator/
+    - bar-chart
+  - models/
+    - country.model
+  - pages/
+    - country/
+    - home/
+    - not-found/
+  - services/
+    - country.service
+
+2. ## Eléments d'architecture
+
+- Créer un service séparer pour faire les appels API
+- Utiliser les `behaviorSubject` pour éviter de refaire les appels API à chaque fois
+- Créer un component standalone pour la création des graphiques
+- Créer et utiliser des models pour les différents objets de l'application (notamment l'objet `Country`)
+- Les `Header` et `Footer` doivent être dans un component à part chacun et réutilisés pour chaque page (SPA)
+
+La séparation des composants et des services permet de gérer de manière centralisé les appels API (service) afin de n'avoir qu'un endroit à changer lors d'un changement d'API (principe de l'adapter)
+De plus cette séparation permet de respecter le principe de "Single responsibility"
+Les services seront utilisés via le système d'injection de dépendance d'Angular (Correspondant à un Singleton pattern)
+L'utilisation du constructor pattern permettra de gérer la création d'objet `Country` ce qui rendra leur manipulation plus simple
