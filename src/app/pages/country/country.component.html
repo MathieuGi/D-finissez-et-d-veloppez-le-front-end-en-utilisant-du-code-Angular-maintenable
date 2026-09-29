@@ -4,27 +4,18 @@
       <div>{{ titlePage }}</div>
     </div>
     <div class="split">
-      <div>
-        <p>Number of entries</p>
-        <p>{{ totalEntries }}</p>
-      </div>
-      <div>
-        <p>Total Number of medals</p>
-        <p>{{ totalMedals }}</p>
-      </div>
-      <div>
-        <p>Total Number of athletes</p>
-        <p>{{ totalAthletes }}</p>
-      </div>
+      <app-chart-indicator title="Number of entries" [value]="totalEntries" />
+      <app-chart-indicator
+        title="Total Number of medals"
+        [value]="totalMedals"
+      />
+      <app-chart-indicator
+        title="Total Number of athletes"
+        [value]="totalAthletes"
+      />
     </div>
   </div>
-  <div class="chart-container wrapper-container">
-    <div class="container">
-      <canvas id="countryChart">{{ lineChart }}</canvas>
-      <h2>Date</h2>
-    </div>
-  </div>
-  <div class="center">
-    <a routerLink="">Go back</a>
-  </div>
+  @if (years.length && medals.length) {
+    <app-bar-chart [labels]="years" [data]="medals" />
+  }
 </div>

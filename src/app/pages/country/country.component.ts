@@ -1,67 +1,86 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import Chart from 'chart.js/auto';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { Country } from 'src/app/models/country';
+import { CountryService } from 'src/app/services/country.service';
+import { Participation } from 'src/app/models/participation';
 
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
-  styleUrls: ['./country.component.scss']
+  styleUrls: ['./country.component.scss'],
 })
-export class CountryComponent implements OnInit {
-  private olympicUrl = './assets/mock/olympic.json';
-  public lineChart!: Chart<"line", string[], number>;
-  public titlePage: string = '';
-  public totalEntries: any = 0;
-  public totalMedals: number = 0;
-  public totalAthletes: number = 0;
-  public error!: string;
+export class CountryComponent implements OnInit, OnDestroy {
+  titlePage: string = '';
+  totalEntries: number = 0;
+  totalMedals: number = 0;
+  totalAthletes: number = 0;
+  years: number[] = [];
+  medals: string[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {
-  }
+  error!: string;
+
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private route: ActivatedRoute,
+    private countryService: CountryService,
+  ) {}
 
   ngOnInit() {
-    let countryName: string | null = null
-    this.route.paramMap.subscribe((param: ParamMap) => countryName = param.get('countryName'));
-    this.http.get<any[]>(this.olympicUrl).pipe().subscribe(
-      (data) => {
-        if (data && data.length > 0) {
-          const selectedCountry = data.find((i: any) => i.country === countryName);
-          this.titlePage = selectedCountry.country;
-          const participations = selectedCountry?.participations.map((i: any) => i);
-          this.totalEntries = participations?.length ?? 0;
-          const years = selectedCountry?.participations.map((i: any) => i.year) ?? [];
-          const medals = selectedCountry?.participations.map((i: any) => i.medalsCount.toString()) ?? [];
-          this.totalMedals = medals.reduce((accumulator: any, item: any) => accumulator + parseInt(item), 0);
-          const nbAthletes = selectedCountry?.participations.map((i: any) => i.athleteCount.toString()) ?? []
-          this.totalAthletes = nbAthletes.reduce((accumulator: any, item: any) => accumulator + parseInt(item), 0);
-          this.buildChart(years, medals);
-        }
-      },
-      (error: HttpErrorResponse) => {
-        this.error = error.message
-      }
-    );
+    let countryId: string | null = this.route.snapshot.paramMap.get('id');
+
+    if (countryId) {
+      this.countryService
+        .getCountryById(countryId)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((country: Country | undefined) => {
+          if (country) {
+            this.titlePage = country.country;
+            this.years =
+              country.participations.map(
+                (participation: Participation) => participation.year,
+              ) ?? [];
+            this.medals =
+              country.participations.map((participation: Participation) =>
+                participation.medalsCount.toString(),
+              ) ?? [];
+
+            this.getTotalEntries(country);
+            this.getTotalMedals();
+            this.getTotalAthletes(country);
+          }
+        });
+    }
   }
 
-  buildChart(years: number[], medals: string[]) {
-    const lineChart = new Chart("countryChart", {
-      type: 'line',
-      data: {
-        labels: years,
-        datasets: [
-          {
-            label: "medals",
-            data: medals,
-            backgroundColor: '#0b868f'
-          },
-        ]
-      },
-      options: {
-        aspectRatio: 2.5
-      }
-    });
-    this.lineChart = lineChart;
+  private getTotalEntries = (country: Country) => {
+    const participations = country.participations.map(
+      (participation: Participation) => participation,
+    );
+    this.totalEntries = participations?.length ?? 0;
+  };
+
+  private getTotalMedals = () => {
+    this.totalMedals = this.medals.reduce(
+      (accumulator: number, item: string) => accumulator + parseInt(item),
+      0,
+    );
+  };
+
+  private getTotalAthletes = (country: Country) => {
+    const nbAthletes =
+      country.participations.map(
+        (participation: Participation) => participation.athleteCount,
+      ) ?? [];
+    this.totalAthletes = nbAthletes.reduce(
+      (accumulator: number, item: number) => accumulator + item,
+      0,
+    );
+  };
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
