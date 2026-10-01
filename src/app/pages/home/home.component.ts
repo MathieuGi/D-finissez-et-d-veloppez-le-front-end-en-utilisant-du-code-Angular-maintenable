@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Country } from 'src/app/models/country';
-import { CountryService } from 'src/app/services/country.service';
+import { CountryService } from '../../services/country.service';
+import { Country } from '../../models/country';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class HomeComponent {
-  countries$: Observable<Country[]> = this.countryService.getCountries();
+  countryService: CountryService = inject(CountryService);
 
-  constructor(private countryService: CountryService) {}
+  countries$: Observable<Country[]> = this.countryService.getCountries();
 }

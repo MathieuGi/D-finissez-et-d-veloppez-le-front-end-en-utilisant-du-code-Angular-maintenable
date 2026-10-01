@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     imports: [],
     selector: 'app-chart-indicator',
     templateUrl: './chart-indicator.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './chart-indicator.component.scss'
 })
 export class ChartIndicatorComponent {
