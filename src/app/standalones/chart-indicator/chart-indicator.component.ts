@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  standalone: true,
-  imports: [],
-  selector: 'app-chart-indicator',
-  templateUrl: './chart-indicator.component.html',
-  styleUrl: './chart-indicator.component.scss',
+    imports: [],
+    selector: 'app-chart-indicator',
+    templateUrl: './chart-indicator.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './chart-indicator.component.scss'
 })
 export class ChartIndicatorComponent {
   @Input({ required: true }) title: string = '';

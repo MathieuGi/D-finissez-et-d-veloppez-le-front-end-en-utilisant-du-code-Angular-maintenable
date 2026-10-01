@@ -1,12 +1,20 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Country } from 'src/app/models/country';
-import { Participation } from 'src/app/models/participation';
+import { Country } from '../../models/country';
+import { Participation } from '../../models/participation';
 
 @Component({
   selector: 'app-countries-overview',
   templateUrl: './countries-overview.component.html',
   styleUrl: './countries-overview.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CountriesOverviewComponent implements OnChanges {
   @Input() countries: Country[] = [];
