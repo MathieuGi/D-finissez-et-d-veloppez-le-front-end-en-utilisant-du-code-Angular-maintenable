@@ -6,9 +6,10 @@ import { CountryService } from 'src/app/services/country.service';
 import { Participation } from 'src/app/models/participation';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.scss'],
+    selector: 'app-country',
+    templateUrl: './country.component.html',
+    styleUrls: ['./country.component.scss'],
+    standalone: false
 })
 export class CountryComponent implements OnInit, OnDestroy {
   titlePage: string = '';

@@ -2,11 +2,10 @@ import { Component, Input, OnInit, output } from '@angular/core';
 import { Chart, ChartEvent, ActiveElement } from 'chart.js/auto';
 
 @Component({
-  selector: 'app-pie-chart',
-  standalone: true,
-  imports: [],
-  templateUrl: './pie-chart.component.html',
-  styleUrl: './pie-chart.component.scss',
+    selector: 'app-pie-chart',
+    imports: [],
+    templateUrl: './pie-chart.component.html',
+    styleUrl: './pie-chart.component.scss'
 })
 export class PieChartComponent implements OnInit {
   @Input({ required: true }) title: string = '';

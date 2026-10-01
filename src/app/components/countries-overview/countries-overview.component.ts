@@ -4,9 +4,10 @@ import { Country } from 'src/app/models/country';
 import { Participation } from 'src/app/models/participation';
 
 @Component({
-  selector: 'app-countries-overview',
-  templateUrl: './countries-overview.component.html',
-  styleUrl: './countries-overview.component.scss',
+    selector: 'app-countries-overview',
+    templateUrl: './countries-overview.component.html',
+    styleUrl: './countries-overview.component.scss',
+    standalone: false
 })
 export class CountriesOverviewComponent implements OnChanges {
   @Input() countries: Country[] = [];

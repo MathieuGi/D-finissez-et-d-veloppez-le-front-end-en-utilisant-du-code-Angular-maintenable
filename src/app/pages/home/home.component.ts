@@ -4,9 +4,10 @@ import { Country } from 'src/app/models/country';
 import { CountryService } from 'src/app/services/country.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent {
   countries$: Observable<Country[]> = this.countryService.getCountries();
