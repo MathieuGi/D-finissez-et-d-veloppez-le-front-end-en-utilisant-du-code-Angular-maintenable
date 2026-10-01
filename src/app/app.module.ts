@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +32,7 @@ import { AsyncPipe } from '@angular/common';
     ChartIndicatorComponent,
     AsyncPipe,
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(withXhr())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,14 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { Country } from 'src/app/models/country';
-import { CountryService } from 'src/app/services/country.service';
-import { Participation } from 'src/app/models/participation';
+import { CountryService } from '../../services/country.service';
+import { Country } from '../../models/country';
+import { Participation } from '../../models/participation';
 
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CountryComponent implements OnInit, OnDestroy {
   titlePage: string = '';

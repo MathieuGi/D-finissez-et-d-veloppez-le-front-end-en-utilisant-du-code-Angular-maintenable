@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-bar-chart',
-  standalone: true,
-  imports: [],
-  templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.scss',
+    selector: 'app-bar-chart',
+    imports: [],
+    templateUrl: './bar-chart.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './bar-chart.component.scss'
 })
 export class BarChartComponent implements OnInit {
   @Input({ required: true }) labels!: number[];
