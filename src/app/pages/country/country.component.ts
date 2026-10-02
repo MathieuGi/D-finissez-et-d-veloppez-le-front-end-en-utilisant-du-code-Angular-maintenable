@@ -40,6 +40,7 @@ export class CountryComponent implements OnInit, OnDestroy {
     if (countryId) {
       const years = this.years;
       const medals = this.medals;
+
       this.countryService
         .getCountryById(countryId)
         .pipe(takeUntil(this.destroy$))
@@ -59,7 +60,7 @@ export class CountryComponent implements OnInit, OnDestroy {
             );
 
             this.getTotalEntries(country);
-            this.getTotalMedals();
+            this.totalMedals.set(country.getTotalMedals());
             this.getTotalAthletes(country);
           }
         });
@@ -71,15 +72,6 @@ export class CountryComponent implements OnInit, OnDestroy {
       (participation: Participation) => participation,
     );
     this.totalEntries.set(participations?.length ?? 0);
-  };
-
-  private getTotalMedals = () => {
-    this.totalMedals.set(
-      this.medals().reduce(
-        (accumulator: number, item: string) => accumulator + parseInt(item),
-        0,
-      ),
-    );
   };
 
   private getTotalAthletes = (country: Country) => {

@@ -52,14 +52,6 @@ export class CountriesOverviewComponent {
   }
 
   private computeSumOfAllMedalsYears(countries: Country[]): number[] {
-    return countries
-      .map((country: Country) =>
-        country.participations.map(
-          (participation: Participation) => participation.medalsCount,
-        ),
-      )
-      .map((medals: number[]) =>
-        medals.reduce((acc: number, i: number) => acc + i, 0),
-      );
+    return countries.map((country: Country) => country.getTotalMedals());
   }
 }

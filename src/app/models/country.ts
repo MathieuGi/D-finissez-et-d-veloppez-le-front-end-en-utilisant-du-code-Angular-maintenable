@@ -15,6 +15,14 @@ export class Country {
     this.participations.push(participation);
   }
 
+  getTotalMedals(): number {
+    return this.participations.reduce(
+      (acc: number, participation: Participation) =>
+        (acc += participation.medalsCount),
+      0,
+    );
+  }
+
   static countryDtoToCountry(countryDTO: CountryDto) {
     const country: Country = new Country(countryDTO.id, countryDTO.country);
 
