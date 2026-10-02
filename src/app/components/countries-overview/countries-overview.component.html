@@ -1,9 +1,7 @@
 <div>
   <div>
-    <div class="center">
-      <div>{{ titlePage }}</div>
-    </div>
-    <div class="split">
+    <app-page-title [title]="titlePage" />
+    <div class="split indicators">
       <app-chart-indicator
         title="Number of countries"
         [value]="totalCountries()"

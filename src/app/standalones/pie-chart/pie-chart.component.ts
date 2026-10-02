@@ -40,7 +40,6 @@ export class PieChartComponent {
         ],
       },
       options: {
-        aspectRatio: 2.5,
         onClick: (e) => {
           if (e.native && this.elementClick) {
             const points = this.pieChart().getElementsAtEventForMode(

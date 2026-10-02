@@ -1,7 +1,7 @@
 <div>
   <div>
     <div class="center">
-      <div>{{ titlePage() }}</div>
+      <app-page-title [title]="titlePage()" />
     </div>
     <div class="split">
       <app-chart-indicator title="Number of entries" [value]="totalEntries()" />

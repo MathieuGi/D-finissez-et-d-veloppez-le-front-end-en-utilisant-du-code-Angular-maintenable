@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.chart-container {
+  display: flex;
+  width: 100%;
+}
+
+@media all and (min-width: 768px) {
+  .chart-container {
+    width: 50%;
+  }
+}
+
+@media all and (min-width: 1200px) {
+  .chart-container {
+    width: 40%;
+  }
+}
