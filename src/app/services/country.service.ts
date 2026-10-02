@@ -60,6 +60,10 @@ export class CountryService {
             Country.countryDtoToCountry(value),
           );
 
+          countries.sort(
+            (a: Country, b: Country) => a.getTotalMedals() - b.getTotalMedals(),
+          );
+
           this.countriesSubject.next(countries);
           this.loaded = true;
         }
