@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Country } from '../models/country';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CountryDto } from '../models/country-dto';
 
 @Injectable({
@@ -16,42 +23,50 @@ export class CountryService {
 
   constructor(private http: HttpClient) {}
 
-  getCountries = (): Observable<Country[]> => {
+  getCountries(): Observable<Country[]> {
     if (!this.loaded) {
       this.fetchCountries();
       this.loaded = true;
     }
 
     return this.countries;
-  };
+  }
 
-  getCountryById = (countryId: string): Observable<Country | undefined> => {
+  getCountryById(countryId: string): Observable<Country> {
     if (!this.loaded) {
       this.fetchCountries();
       this.loaded = true;
     }
 
     return this.countries.pipe(
-      map((countries: Country[]) =>
-        countries.find((country) => country.id === parseInt(countryId)),
+      map((countries: Country[]) => {
+        const country = countries.find(
+          (country) => country.id === parseInt(countryId),
+        );
+        if (!country) {
+          throwError(() => new Error('Country not found'));
+        }
+
+        return country as Country;
+      }),
+    );
+  }
+
+  fetchCountries(): Observable<CountryDto[]> {
+    return this.http.get<CountryDto[]>(this.olympicUrl).pipe(
+      tap((countriesDTO: CountryDto[]) => {
+        if (countriesDTO && countriesDTO.length > 0) {
+          const countries: Country[] = countriesDTO.map((value: CountryDto) =>
+            Country.countryDtoToCountry(value),
+          );
+
+          this.countriesSubject.next(countries);
+          this.loaded = true;
+        }
+      }),
+      catchError(() =>
+        throwError(() => new Error('Failed to load the countries data')),
       ),
     );
-  };
-
-  private fetchCountries = () => {
-    this.http
-      .get<CountryDto[]>(this.olympicUrl)
-      .pipe()
-      .subscribe({
-        next: (countriesDTO: CountryDto[]) => {
-          if (countriesDTO && countriesDTO.length > 0) {
-            const countries: Country[] = countriesDTO.map((value: CountryDto) =>
-              Country.countryDtoToCountry(value),
-            );
-
-            this.countriesSubject.next(countries);
-          }
-        },
-      });
-  };
+  }
 }

@@ -6,17 +6,17 @@
     <div class="split">
       <app-chart-indicator
         title="Number of countries"
-        [value]="totalCountries"
+        [value]="totalCountries()"
       />
-      <app-chart-indicator title="Number of JOs" [value]="totalJOs" />
+      <app-chart-indicator title="Number of JOs" [value]="totalJOs()" />
     </div>
   </div>
-  @if (countryNames.length) {
+  @if (countryNames().length) {
     <app-pie-chart
       title="DashboardPieChart"
-      [labels]="countryNames"
+      [labels]="countryNames()"
       label="Medals"
-      [data]="sumOfAllMedalsYears"
+      [data]="sumOfAllMedalsYears()"
       (elementClick)="onCountryClick($event)"
     />
   }

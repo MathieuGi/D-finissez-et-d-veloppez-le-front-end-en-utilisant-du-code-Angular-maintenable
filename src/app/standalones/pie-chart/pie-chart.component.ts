@@ -1,31 +1,32 @@
-import { Component, Input, OnInit, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, output, input, computed } from '@angular/core';
 import { Chart, ChartEvent, ActiveElement } from 'chart.js/auto';
 
 @Component({
-    selector: 'app-pie-chart',
-    imports: [],
-    templateUrl: './pie-chart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './pie-chart.component.scss'
+  selector: 'app-pie-chart',
+  imports: [],
+  templateUrl: './pie-chart.component.html',
+  styleUrl: './pie-chart.component.scss',
 })
-export class PieChartComponent implements OnInit {
-  @Input({ required: true }) title: string = '';
-  @Input({ required: true }) labels: string[] = [];
-  @Input({ required: true }) label: string = '';
-  @Input({ required: true }) data: number[] = [];
+export class PieChartComponent {
+  title = input<string>('pieChart');
+  labels = input.required<string[]>();
+  label = input.required<string>();
+  data = input.required<number[]>();
+
   elementClick = output<number>();
 
-  public pieChart!: Chart<'pie', number[], string>;
+  // Pourquoi ça ne fonctionne pas avec cette notation :  computed<Chart<'pie', number[], string>>(this.buildChart);
+  pieChart = computed<Chart<'pie', number[], string>>(() => this.buildChart());
 
-  ngOnInit() {
-    const pieChart = new Chart(this.title, {
+  buildChart(): Chart<'pie', number[], string> {
+    return new Chart(this.title(), {
       type: 'pie',
       data: {
-        labels: this.labels,
+        labels: this.labels(),
         datasets: [
           {
-            label: this.label,
-            data: this.data,
+            label: this.label(),
+            data: this.data(),
             backgroundColor: [
               '#0b868f',
               '#adc3de',
@@ -42,7 +43,7 @@ export class PieChartComponent implements OnInit {
         aspectRatio: 2.5,
         onClick: (e) => {
           if (e.native && this.elementClick) {
-            const points = pieChart.getElementsAtEventForMode(
+            const points = this.pieChart().getElementsAtEventForMode(
               e.native,
               'point',
               { intersect: true },
@@ -65,6 +66,5 @@ export class PieChartComponent implements OnInit {
         },
       },
     });
-    this.pieChart = pieChart;
   }
 }

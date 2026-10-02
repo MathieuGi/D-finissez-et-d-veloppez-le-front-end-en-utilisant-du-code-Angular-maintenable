@@ -1,21 +1,21 @@
 <div>
   <div>
     <div class="center">
-      <div>{{ titlePage }}</div>
+      <div>{{ titlePage() }}</div>
     </div>
     <div class="split">
-      <app-chart-indicator title="Number of entries" [value]="totalEntries" />
+      <app-chart-indicator title="Number of entries" [value]="totalEntries()" />
       <app-chart-indicator
         title="Total Number of medals"
-        [value]="totalMedals"
+        [value]="totalMedals()"
       />
       <app-chart-indicator
         title="Total Number of athletes"
-        [value]="totalAthletes"
+        [value]="totalAthletes()"
       />
     </div>
   </div>
-  @if (years.length && medals.length) {
-    <app-bar-chart [labels]="years" [data]="medals" />
+  @if (years().length && medals().length) {
+    <app-bar-chart label="medals" [labels]="years()" [data]="medals()" />
   }
 </div>
