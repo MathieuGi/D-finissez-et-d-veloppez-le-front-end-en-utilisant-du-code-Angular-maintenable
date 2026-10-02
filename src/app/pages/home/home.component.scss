@@ -1,4 +1,12 @@
 :host {
-    // background-color: green;
-    flex-grow: 1;
+  // background-color: green;
+  flex-grow: 1;
+}
+
+.placeholder {
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,5 +1,16 @@
 <ng-container>
-  @if (countries$ | async; as countries) {
-    <app-countries-overview [countries]="countries" />
+  @if (isLoading()) {
+    <div class="placeholder">
+      <ngx-spinner
+        type="ball-scale-multiple"
+        [fullScreen]="false"
+      ></ngx-spinner>
+    </div>
+  } @else if (hasError()) {
+    <div class="placeholder">
+      {{ errorMessage() }}
+    </div>
+  } @else if (countries.hasValue()) {
+    <app-countries-overview [countries]="countries.value()" />
   }
 </ng-container>

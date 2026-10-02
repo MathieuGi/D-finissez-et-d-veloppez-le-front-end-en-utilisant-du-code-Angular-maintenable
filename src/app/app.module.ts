@@ -1,5 +1,5 @@
 import { provideHttpClient, withXhr } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { CountriesOverviewComponent } from './components/countries-overview/coun
 import { BarChartComponent } from './standalones/bar-chart/bar-chart.component';
 import { AsyncPipe } from '@angular/common';
 import { PageTitleComponent } from './components/page-title/page-title.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -33,8 +34,10 @@ import { PageTitleComponent } from './components/page-title/page-title.component
     BarChartComponent,
     ChartIndicatorComponent,
     AsyncPipe,
+    NgxSpinnerModule,
   ],
   providers: [provideHttpClient(withXhr())],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
+  delay,
   map,
   Observable,
+  switchMap,
   tap,
   throwError,
 } from 'rxjs';
@@ -29,7 +31,11 @@ export class CountryService {
       this.loaded = true;
     }
 
-    return this.countries;
+    return this.countries.pipe(
+      // Used for tests
+      delay(1000),
+      // switchMap(() => throwError(() => new Error('Error when loading data'))),
+    );
   }
 
   getCountryById(countryId: string): Observable<Country> {
