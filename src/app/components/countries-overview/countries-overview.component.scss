@@ -1,0 +1,10 @@
+.indicators {
+  display: flex;
+  flex-direction: column;
+}
+
+@media all and (min-width: 767px) {
+  .indicators {
+    flex-direction: row;
+  }
+}

@@ -5,7 +5,6 @@ import {
   delay,
   map,
   Observable,
-  switchMap,
   tap,
   throwError,
 } from 'rxjs';

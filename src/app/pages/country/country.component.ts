@@ -1,12 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  OnDestroy,
-  OnInit,
-  resource,
-  signal,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CountryService } from '../../services/country.service';

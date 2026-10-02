@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, resource } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { CountryService } from '../../services/country.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NgxSpinnerService } from 'ngx-spinner';

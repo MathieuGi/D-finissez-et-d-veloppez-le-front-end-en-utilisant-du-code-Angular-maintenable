@@ -15,7 +15,7 @@ export class PieChartComponent {
 
   elementClick = output<number>();
 
-  // Pourquoi ça ne fonctionne pas avec cette notation :  computed<Chart<'pie', number[], string>>(this.buildChart);
+  // QUESTION : Pourquoi ça ne fonctionne pas avec cette notation :  computed<Chart<'pie', number[], string>>(this.buildChart);
   pieChart = computed<Chart<'pie', number[], string>>(() => this.buildChart());
 
   buildChart(): Chart<'pie', number[], string> {
