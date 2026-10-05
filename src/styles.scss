@@ -12,16 +12,3 @@
   color: white;
   cursor: pointer;
 }
-
-.split {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 5px;
-}
-
-@media all and (min-width: 767px) {
-  .split {
-    gap: 20px;
-  }
-}

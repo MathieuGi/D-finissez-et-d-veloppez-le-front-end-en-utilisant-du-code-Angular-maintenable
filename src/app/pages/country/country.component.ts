@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { CountryService } from '../../services/country.service';
+import { CountryService } from '../../standalones/bar-chart/services/country.service';
 import { Country } from '../../models/country';
 import { Participation } from '../../models/participation';
 import { Indicator } from '../../models/indicator';

@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject } from '@angular/core';
-import { CountryService } from '../../services/country.service';
+import { CountryService } from '../../standalones/bar-chart/services/country.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NgxSpinnerService } from 'ngx-spinner';
 

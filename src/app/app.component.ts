@@ -4,7 +4,7 @@ import {
   OnInit,
   resource,
 } from '@angular/core';
-import { CountryService } from './services/country.service';
+import { CountryService } from './standalones/bar-chart/services/country.service';
 import { first } from 'rxjs';
 
 @Component({

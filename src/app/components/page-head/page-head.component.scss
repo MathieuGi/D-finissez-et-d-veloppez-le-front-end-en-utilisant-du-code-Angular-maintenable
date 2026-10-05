@@ -1,0 +1,16 @@
+.title {
+  margin-bottom: 1em;
+}
+
+.grid-container {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 1em;
+}
+
+@media all and (max-width: 767px) {
+  .grid-container {
+    grid-auto-flow: row;
+  }
+}

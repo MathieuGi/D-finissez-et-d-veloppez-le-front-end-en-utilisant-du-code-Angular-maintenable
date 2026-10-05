@@ -1,16 +1,19 @@
-<div>
-  @if (titlePage()) {
-    <app-page-head [title]="titlePage()" [indicators]="indicators()" />
+@if (titlePage()) {
+  <app-page-head [title]="titlePage()" [indicators]="indicators()" />
 
-    @if (years().length && medals().length) {
-      <app-bar-chart label="medals" [labels]="years()" [data]="medals()" />
-    }
-  } @else {
-    <div class="no-country-found">
-      <h3>No country found</h3>
-      <button (click)="onBackHome()" class="btn-primary" aria-label="back">
-        Back to home
-      </button>
-    </div>
+  @if (years().length && medals().length) {
+    <app-bar-chart
+      class="bar-chart"
+      label="medals"
+      [labels]="years()"
+      [data]="medals()"
+    />
   }
-</div>
+} @else {
+  <div class="no-country-found">
+    <h3>No country found</h3>
+    <button (click)="onBackHome()" class="btn-primary" aria-label="back">
+      Back to home
+    </button>
+  </div>
+}

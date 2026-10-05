@@ -1,16 +1,13 @@
-.indicators {
+:host {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.placeholder {
+.pie-chart {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-@media all and (min-width: 767px) {
-  .indicators {
-    flex-direction: row;
-  }
+  max-width: 70vh;
 }

@@ -27,9 +27,6 @@ export class BarChartComponent {
           },
         ],
       },
-      options: {
-        aspectRatio: 2.5,
-      },
     });
   });
 
