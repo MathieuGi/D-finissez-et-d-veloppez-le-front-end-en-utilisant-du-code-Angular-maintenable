@@ -1,15 +1,9 @@
 <div>
-  <div>
-    <app-page-title [title]="titlePage" />
-    <div class="split indicators">
-      <app-chart-indicator
-        title="Number of countries"
-        [value]="totalCountries()"
-      />
-      <app-chart-indicator title="Number of JOs" [value]="totalJOs()" />
-    </div>
-  </div>
-  @if (countryNames().length) {
+  <app-page-head [title]="titlePage" [indicators]="indicators()" />
+
+  @if (!countries().length) {
+    <div class="placeholder">No data to display</div>
+  } @else {
     <app-pie-chart
       title="DashboardPieChart"
       [labels]="countryNames()"

@@ -1,7 +1,8 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Country } from '../../models/country';
 import { Participation } from '../../models/participation';
+import { Indicator } from '../../models/indicator';
 
 // QUESTION : Mes fonctions pourraient elles faire appel directement à this.countries() ?
 
@@ -15,14 +16,27 @@ export class CountriesOverviewComponent {
   countries = input.required<Country[]>();
 
   titlePage: string = 'Medals per Country';
-  totalJOs = computed<number>(() => this.computeTotalJos(this.countries()));
   countryNames = computed<string[]>(() =>
     this.computeCountryName(this.countries()),
   );
-  totalCountries = computed<number>(() => this.countryNames().length);
   sumOfAllMedalsYears = computed<number[]>(() =>
     this.computeSumOfAllMedalsYears(this.countries()),
   );
+
+  indicators = computed<Indicator[]>(() => {
+    const totalCountries = this.countryNames().length;
+    const totalJOs = this.computeTotalJos(this.countries());
+    return [
+      {
+        name: 'Number of countries',
+        value: totalCountries,
+      },
+      {
+        name: 'Number of JOs',
+        value: totalJOs,
+      },
+    ];
+  });
 
   constructor(private router: Router) {}
 

@@ -3,6 +3,12 @@
   flex-direction: column;
 }
 
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media all and (min-width: 767px) {
   .indicators {
     flex-direction: row;

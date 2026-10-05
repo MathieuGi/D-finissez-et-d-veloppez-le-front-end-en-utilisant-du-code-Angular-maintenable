@@ -1,0 +1,10 @@
+<div>
+  <div class="center">
+    <app-page-title [title]="title()" />
+  </div>
+  <div class="split indicators">
+    @for (indicator of indicators(); track indicator.name) {
+      <app-chart-indicator [title]="indicator.name" [value]="indicator.value" />
+    }
+  </div>
+</div>

@@ -15,6 +15,7 @@ import { BarChartComponent } from './standalones/bar-chart/bar-chart.component';
 import { AsyncPipe } from '@angular/common';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PageHeadComponent } from './components/page-head/page-head.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FooterComponent,
     CountriesOverviewComponent,
     PageTitleComponent,
+    PageHeadComponent,
   ],
   imports: [
     BrowserModule,
