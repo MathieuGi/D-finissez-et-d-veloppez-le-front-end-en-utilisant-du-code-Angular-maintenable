@@ -8,9 +8,9 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { Country } from '../models/country';
+import { Country } from '../../../models/country';
 import { HttpClient } from '@angular/common/http';
-import { CountryDto } from '../models/country-dto';
+import { CountryDto } from '../../../models/country-dto';
 
 @Injectable({
   providedIn: 'root',

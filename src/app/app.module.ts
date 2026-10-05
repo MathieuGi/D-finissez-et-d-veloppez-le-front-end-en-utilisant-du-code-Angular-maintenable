@@ -1,5 +1,5 @@
 import { provideHttpClient, withXhr } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,9 @@ import { PieChartComponent } from './standalones/pie-chart/pie-chart.component';
 import { CountriesOverviewComponent } from './components/countries-overview/countries-overview.component';
 import { BarChartComponent } from './standalones/bar-chart/bar-chart.component';
 import { AsyncPipe } from '@angular/common';
+import { PageTitleComponent } from './components/page-title/page-title.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { PageHeadComponent } from './components/page-head/page-head.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,8 @@ import { AsyncPipe } from '@angular/common';
     HeaderComponent,
     FooterComponent,
     CountriesOverviewComponent,
+    PageTitleComponent,
+    PageHeadComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,8 +36,10 @@ import { AsyncPipe } from '@angular/common';
     BarChartComponent,
     ChartIndicatorComponent,
     AsyncPipe,
+    NgxSpinnerModule,
   ],
   providers: [provideHttpClient(withXhr())],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

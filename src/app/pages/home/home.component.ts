@@ -1,17 +1,34 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CountryService } from '../../services/country.service';
-import { Country } from '../../models/country';
+import { Component, computed, effect, inject } from '@angular/core';
+import { CountryService } from '../../standalones/bar-chart/services/country.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeComponent {
   countryService: CountryService = inject(CountryService);
+  spinner: NgxSpinnerService = inject(NgxSpinnerService);
 
-  countries$: Observable<Country[]> = this.countryService.getCountries();
+  countries = rxResource({
+    stream: () => this.countryService.getCountries(),
+  });
+  isLoading = computed<boolean>(() => this.countries.status() === 'loading');
+  hasError = computed<boolean>(() => this.countries.status() === 'error');
+  errorMessage = computed<string>(
+    () => this.countries.error()?.message || 'An error occure.',
+  );
+
+  constructor() {
+    effect(() => {
+      if (this.isLoading()) {
+        this.spinner.show();
+      } else {
+        this.spinner.hide();
+      }
+    });
+  }
 }

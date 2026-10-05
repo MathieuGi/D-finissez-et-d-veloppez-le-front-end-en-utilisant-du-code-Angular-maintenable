@@ -1,0 +1,12 @@
+<div class="center title">
+  <app-page-title [title]="title()" />
+</div>
+<div class="grid-container">
+  @for (indicator of indicators(); track indicator.name) {
+    <app-chart-indicator
+      class="grid-item"
+      [title]="indicator.name"
+      [value]="indicator.value"
+    />
+  }
+</div>

@@ -1,21 +1,19 @@
-<div>
-  <div>
-    <div class="center">
-      <div>{{ titlePage }}</div>
-    </div>
-    <div class="split">
-      <app-chart-indicator title="Number of entries" [value]="totalEntries" />
-      <app-chart-indicator
-        title="Total Number of medals"
-        [value]="totalMedals"
-      />
-      <app-chart-indicator
-        title="Total Number of athletes"
-        [value]="totalAthletes"
-      />
-    </div>
-  </div>
-  @if (years.length && medals.length) {
-    <app-bar-chart [labels]="years" [data]="medals" />
+@if (titlePage()) {
+  <app-page-head [title]="titlePage()" [indicators]="indicators()" />
+
+  @if (years().length && medals().length) {
+    <app-bar-chart
+      class="bar-chart"
+      label="medals"
+      [labels]="years()"
+      [data]="medals()"
+    />
   }
-</div>
+} @else {
+  <div class="no-country-found">
+    <h3>No country found</h3>
+    <button (click)="onBackHome()" class="btn-primary" aria-label="back">
+      Back to home
+    </button>
+  </div>
+}

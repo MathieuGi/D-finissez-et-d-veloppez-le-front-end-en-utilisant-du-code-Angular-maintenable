@@ -1,6 +1,2 @@
-<div class="chart-container wrapper-container">
-  <div class="container">
-    <canvas id="countryChart">{{ lineChart }}</canvas>
-    <h2>Date</h2>
-  </div>
-</div>
+<canvas [id]="title()">{{ lineChart() }}</canvas>
+<h2>Date</h2>

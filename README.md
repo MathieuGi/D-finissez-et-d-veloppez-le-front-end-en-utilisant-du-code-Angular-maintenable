@@ -1,6 +1,6 @@
 # OlympicGamesStarter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+This project run with Angular 22. Verify your Angular CLI is up to date for this version
 
 Don't forget to install your node_modules before starting (`npm install`).
 
@@ -12,18 +12,17 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Where to start
+## project architecture
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+This project has a simple architecture.
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
-
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
-
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
-
-You're now ready to implement the requested features.
-
-Good luck!
+- We can find our components in 3 folders :
+  - pages (Representing the site pages - home / country details / not found)
+  - Standalones (for component that can be reused outside of the project)
+  - components (for reusable components specifics to the project)
+- The services folder has only one service (CountryService) for every http requests
+- In the models folder we can find :
+  - country-dto (Representing our country entity coming from the backend)
+  - country (Representing the country entity in our app)
+  - participation (Representing one country participation)
+  - indicator (an interface used to display informations in pages head)

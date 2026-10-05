@@ -1,3 +1,7 @@
-<app-header [title]="title" />
-<router-outlet></router-outlet>
-<app-footer />
+<div class="grid-container">
+  <app-header [title]="title" class="grid-item header" />
+  <div class="grid-item content">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer class="grid-item" />
+</div>

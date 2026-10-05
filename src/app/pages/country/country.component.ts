@@ -1,89 +1,106 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { CountryService } from '../../services/country.service';
+import { CountryService } from '../../standalones/bar-chart/services/country.service';
 import { Country } from '../../models/country';
 import { Participation } from '../../models/participation';
+import { Indicator } from '../../models/indicator';
 
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CountryComponent implements OnInit, OnDestroy {
-  titlePage: string = '';
-  totalEntries: number = 0;
-  totalMedals: number = 0;
-  totalAthletes: number = 0;
-  years: number[] = [];
-  medals: string[] = [];
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private countryService: CountryService = inject(CountryService);
+  private router: Router = inject(Router);
+
+  titlePage = signal<string>('');
+  years = signal<number[]>([]);
+  medals = signal<string[]>([]);
+
+  indicators = signal<Indicator[]>([]);
 
   error!: string;
 
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private route: ActivatedRoute,
-    private countryService: CountryService,
-  ) {}
-
   ngOnInit() {
     let countryId: string | null = this.route.snapshot.paramMap.get('id');
 
     if (countryId) {
+      const years = this.years;
+      const medals = this.medals;
+
       this.countryService
         .getCountryById(countryId)
         .pipe(takeUntil(this.destroy$))
         .subscribe((country: Country | undefined) => {
           if (country) {
-            this.titlePage = country.country;
-            this.years =
+            this.titlePage.set(country.country);
+            years.set(
               country.participations.map(
                 (participation: Participation) => participation.year,
-              ) ?? [];
-            this.medals =
+              ) ?? [],
+            );
+
+            medals.set(
               country.participations.map((participation: Participation) =>
                 participation.medalsCount.toString(),
-              ) ?? [];
+              ) ?? [],
+            );
 
             this.getTotalEntries(country);
-            this.getTotalMedals();
+            this.getTotalMedals(country);
             this.getTotalAthletes(country);
           }
         });
     }
   }
 
+  onBackHome() {
+    this.router.navigate(['']);
+  }
+
   private getTotalEntries = (country: Country) => {
-    const participations = country.participations.map(
-      (participation: Participation) => participation,
-    );
-    this.totalEntries = participations?.length ?? 0;
+    const participations =
+      country.participations.map(
+        (participation: Participation) => participation,
+      )?.length || 0;
+
+    this.indicators.set([
+      ...this.indicators(),
+      { name: 'Number of entries', value: participations },
+    ]);
   };
 
-  private getTotalMedals = () => {
-    this.totalMedals = this.medals.reduce(
-      (accumulator: number, item: string) => accumulator + parseInt(item),
-      0,
-    );
+  private getTotalMedals = (country: Country) => {
+    this.indicators.update((indicators: Indicator[]) => [
+      ...indicators,
+      {
+        name: 'Total Number of medals',
+        value: country.getTotalMedals(),
+      },
+    ]);
   };
 
   private getTotalAthletes = (country: Country) => {
-    const nbAthletes =
+    const athleteCounts =
       country.participations.map(
         (participation: Participation) => participation.athleteCount,
       ) ?? [];
-    this.totalAthletes = nbAthletes.reduce(
+
+    const nbAthletes = athleteCounts.reduce(
       (accumulator: number, item: number) => accumulator + item,
       0,
     );
+
+    this.indicators.update((indicators: Indicator[]) => [
+      ...indicators,
+      { name: 'Total Number of athletes', value: nbAthletes },
+    ]);
   };
 
   ngOnDestroy(): void {

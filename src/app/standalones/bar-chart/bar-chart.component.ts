@@ -1,29 +1,45 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Chart } from 'chart.js';
 
 @Component({
-    selector: 'app-bar-chart',
-    imports: [],
-    templateUrl: './bar-chart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './bar-chart.component.scss'
+  selector: 'app-bar-chart',
+  imports: [],
+  templateUrl: './bar-chart.component.html',
+  styleUrl: './bar-chart.component.scss',
 })
-export class BarChartComponent implements OnInit {
-  @Input({ required: true }) labels!: number[];
-  @Input({ required: true }) data!: string[];
+export class BarChartComponent {
+  title = input<string>('barChart');
+  labels = input.required<number[]>();
+  label = input.required<string>();
+  data = input.required<string[]>();
 
-  lineChart!: Chart<'bar', string[], number>;
-
-  ngOnInit() {
-    const lineChart = new Chart('countryChart', {
+  lineChart = computed<Chart<'bar', string[], number>>(() => {
+    return new Chart(this.title(), {
       type: 'bar',
       data: {
-        labels: this.labels,
+        labels: this.labels(),
         datasets: [
           {
             barPercentage: 0.4,
-            label: 'medals',
-            data: this.data,
+            label: this.label(),
+            data: this.data(),
+            backgroundColor: '#0b868f',
+          },
+        ],
+      },
+    });
+  });
+
+  buildChart(): Chart<'bar', string[], number> {
+    return new Chart(this.title(), {
+      type: 'bar',
+      data: {
+        labels: this.labels(),
+        datasets: [
+          {
+            barPercentage: 0.4,
+            label: this.label(),
+            data: this.data(),
             backgroundColor: '#0b868f',
           },
         ],
@@ -32,6 +48,5 @@ export class BarChartComponent implements OnInit {
         aspectRatio: 2.5,
       },
     });
-    this.lineChart = lineChart;
   }
 }

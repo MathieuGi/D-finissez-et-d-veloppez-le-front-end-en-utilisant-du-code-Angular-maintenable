@@ -1,0 +1,16 @@
+.indicator {
+  padding: 10px;
+  border: solid #0b868f 1px;
+  border-radius: 10px;
+  color: gray;
+
+  p {
+    text-align: center;
+    margin: 0;
+  }
+
+  p:last-child {
+    font-weight: bold;
+    color: black;
+  }
+}
