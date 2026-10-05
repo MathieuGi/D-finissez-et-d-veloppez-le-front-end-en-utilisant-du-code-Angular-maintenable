@@ -4,18 +4,7 @@
   gap: 2em;
 }
 
-.indicators {
-  display: flex;
-  flex-direction: column;
-}
-
 .no-country-found {
   text-align: center;
   margin: 20px;
-}
-
-@media all and (min-width: 767px) {
-  .indicators {
-    flex-direction: row;
-  }
 }
