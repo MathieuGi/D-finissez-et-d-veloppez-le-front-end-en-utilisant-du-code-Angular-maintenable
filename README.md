@@ -1,8 +1,21 @@
 # OlympicGamesStarter
 
-This project run with Angular 22. Verify your Angular CLI is up to date for this version
+## Contents
 
-Don't forget to install your node_modules before starting (`npm install`).
+1. [Initialization](#initialization)
+2. [Development server](#development-server)
+3. [Build](#build)
+4. [Project architecture](#project-architecture)
+
+## Initialization
+
+This project run with Angular 22. Prerequisites :
+
+- Node.js 22 LTS minimum
+- TypeScript 6.0+
+- RxJS 7.8+ / 8.x
+
+Run the command `npm install` in the root folder to install node_modules
 
 ## Development server
 
@@ -12,7 +25,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## project architecture
+## Project architecture
 
 This project has a simple architecture.
 
